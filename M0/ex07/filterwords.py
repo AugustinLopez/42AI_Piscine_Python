@@ -14,25 +14,17 @@ i = len(argv) - 1
 if(i != 2):
     print("ERROR")
 else:
-    error_str = 1
     error_num = 0
-    try:
-        num = int(argv[1])
-    except ValueError:
-        error_str = 0
     try:
         num = int(argv[2])
     except ValueError:
         error_num = 1
     text = argv[1]
-    if (error_str + error_num != 0):
+    if (error_num != 0):
         print("ERROR")
     else:
         regex = re.compile('[%s]' % re.escape(string.punctuation))
         out = regex.sub(' ', text)
         listing = out.split()
-        result = []
-        for elem in listing:
-            if (len(elem) > num):
-                result.append(elem)
+        result = [elem for elem in listing if len(elem) > num]
         print(result)

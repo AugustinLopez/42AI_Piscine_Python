@@ -2,4 +2,4 @@
 1. Show packages list with version number : `pip list`
 1. Show **numpy** metadata: `pip show numpy`
 1. Search for PyPI package containing 'tesseract' (DEPRECATED): `pip search tesseract`. One can use the PyPI web interface instead: `https://pypi.org/search/?q=tesseract`
-1. Save requirement list: `pip list --format=freeze > requirements.txt`
+1. Save requirement list: `pip list --format=freeze > requirements.txt` or `pip freeze > requirements.txt`
