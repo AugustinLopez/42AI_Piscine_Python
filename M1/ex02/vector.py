@@ -11,7 +11,7 @@ class Vector:
         else:
             if isinstance(args[0], list):
                 if len(args) == 0:
-                    return 
+                    return
             self.cols = len(args)
         self.rows = self.rows + 1
         row = []
@@ -56,19 +56,23 @@ class Vector:
             self.rows = args.rows
             self.cols = args.cols
             self.values = deepcopy(args.values)
-        elif args == None:
+        elif args is None:
             return
         else:
-            raise TypeError(str(type(args)) + " not supported by Vector __init__")
+            raise TypeError(str(type(args))
+                            + " not supported by Vector __init__")
         if self.rows == 1 and isinstance(self.values[0], list):
             self.values = self.values[0]
-    
+        elif self.rows != 1 and self.cols != 1 and self.shape != (0, 0):
+            raise ValueError("Sorry, your Matrix is in another module")
+
     def __init_tuple(self, args: tuple):
         if len(args) != 2:
             raise ValueError("Tuple must contains 2 numbers only")
         if not isinstance(args[0], int) or not isinstance(args[1], int):
             raise TypeError("Expected (int, int). Got ("
-                            + str(type(args[0])) + ", " + str(type(args[1])) + ")")
+                            + str(type(args[0])) + ", "
+                            + str(type(args[1])) + ")")
         elif args[0] == args[1]:
             return
         if args[1] > args[0]:
@@ -81,7 +85,7 @@ class Vector:
         self.cols = 1
         self.shape = (self.rows, self.cols)
         for i in range(args[0], args[1], 1 - 2 * (args[1] <= args[0])):
-            self.values.append([i * 1.0]) 
+            self.values.append([i * 1.0])
 
     def __mul__(self, other):
         if not (isinstance(other, int) or isinstance(other, float)):
@@ -93,7 +97,7 @@ class Vector:
         else:
             for i in range(len(temp.values)):
                 for j in range(len(temp.values[i])):
-                   temp.values[i][j] = temp.values[i][j] * other
+                    temp.values[i][j] = temp.values[i][j] * other
         return temp
 
     def __rmul__(self, other):
@@ -103,7 +107,8 @@ class Vector:
         if not isinstance(other, Vector):
             raise TypeError("Expected Vector. Got " + str(type(other)))
         if (self.rows != other.rows or self.cols != other.cols):
-            raise ValueError("Expected same vector shape. Got " + str(self.shape) + " != " + str(other.shape))
+            raise ValueError("Expected same vector shape. Got "
+                             + str(self.shape) + " != " + str(other.shape))
         v = Vector(self)
         if self.rows == 1:
             for j in range(0, self.cols):
@@ -137,15 +142,16 @@ class Vector:
         if not isinstance(other, Vector):
             raise TypeError("Expected Vector. Got " + str(type(other)))
         if (self.rows != other.rows or self.cols != other.cols):
-            raise ValueError("Expected same vector shape. Got " + str(self.shape) + " != " + str(other.shape))
+            raise ValueError("Expected same vector shape. Got "
+                             + str(self.shape) + " != " + str(other.shape))
         temp = 0.0
         if self.rows == 1:
             for j in range(0, self.cols):
-                temp = temp + v.values[j] * other.values[j]
+                temp = temp + self.values[j] * other.values[j]
         else:
             for i in range(0, self.rows):
                 for j in range(0, self.cols):
-                    temp = temp + v.values[i][j] + other.values[i][j]
+                    temp = temp + self.values[i][j] * other.values[i][j]
         return temp
 
     def T(self):
@@ -170,7 +176,6 @@ class Vector:
         temp.rows = self.cols
         temp.cols = self.rows
         return temp
-            
 
     def __rtruediv__(self, other):
         raise TypeError("Division by class Vector not supported")
@@ -180,6 +185,6 @@ class Vector:
 
     def __str__(self):
         return (str(self.values))
-    
+
     def __repr__(self):
         return (str(self))

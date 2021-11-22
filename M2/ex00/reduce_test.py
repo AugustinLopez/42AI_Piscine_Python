@@ -3,6 +3,7 @@
 from functools import reduce
 from ft_reduce import ft_reduce
 
+
 function = lambda x: x + 1
 iterable = [1, 2, 3]
 try:

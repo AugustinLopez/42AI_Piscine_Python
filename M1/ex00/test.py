@@ -25,6 +25,7 @@ def book_test(name="") -> Book:
         print("<Type Error>", e)
     return ret
 
+
 def part1():
     print("\033[33m RECIPE ERROR:\033[0m")
     test = recipe_test(1, 0, -1, 4, 5)
@@ -40,28 +41,35 @@ def part1():
     test = recipe_test("a", 2, 3, [""], 5)
     test = recipe_test("a", 2, 3, [""], "")
     test = recipe_test("a", 2, 3, [""], "blabla")
-    test = recipe_test("cooki", 0, 10, ["dough", "sugar", "love"], "dessert", "deliciousness incarnate")
-    test = recipe_test("cooki", 1.5, 10, ["dough", "sugar", "love"], "dessert", "deliciousness incarnate",)
-    test = recipe_test("cooki", 1, 10, [], "deliciousness incarnate", "dessert")
-
+    test = recipe_test("cooki", 0, 10, ["dough", "sugar", "love"],
+                       "dessert", "deliciousness incarnate")
+    test = recipe_test("cooki", 1.5, 10, ["dough", "sugar", "love"],
+                       "dessert", "deliciousness incarnate",)
+    test = recipe_test("cooki", 1, 10, [],
+                       "deliciousness incarnate", "dessert")
     print()
+
 
 def part2():
     print("\033[33m RECIPE VALID:\033[0m")
-    test = recipe_test("tourte", 1, 60, ["milk", "egg", "flour", "salt"], "lunch")
+    test = recipe_test("tourte", 1, 60, ["milk", "egg", "flour", "salt"],
+                       "lunch")
     print()
-    test = recipe_test("cooki", 1, 10, ["dough", "sugar", "love"], "dessert", "deliciousness incarnate")
+    test = recipe_test("cooki", 1, 10, ["dough", "sugar", "love"],
+                       "dessert", "deliciousness incarnate")
+
 
 def part3():
     print("\033[33m BOOK ERROR:\033[0m")
     book = book_test(1)
+
 
 def part4() -> Book:
     print("\033[33m BOOK VALID:\033[0m")
     mybook = book_test("")
     mybook = book_test("My Book")
     print(mybook)
-    crumble = Recipe("Crumble" , 1, 25, ["apples", "flour", "sugar"],
+    crumble = Recipe("Crumble", 1, 25, ["apples", "flour", "sugar"],
                      "dessert", "delicious")
     mybook.add_recipe(crumble)
     mybook.add_recipe(Recipe("cooki", 1, 10, ["dough", "sugar", "love"],

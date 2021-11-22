@@ -4,6 +4,7 @@ from generator import generator
 
 
 text = "Le Lorem Ipsum est simplement du faux texte."
+
 test = []
 for word in generator(text, sep=" "):
     test.append(word)
@@ -22,8 +23,26 @@ for word in generator(text, sep=" ", option="unique"):
     test.append(word)
 print(test)
 test = []
-text = 1.0
-for word in generator(text, sep=" "):
+for word in generator(1.0, sep=" "):
     test.append(word)
 print(test)
 test = []
+
+for word in generator(None, sep=" "):
+    test.append(word)
+print(test)
+
+test = []
+for word in generator(1, sep=" "):
+    test.append(word)
+print(test)
+
+test = []
+for word in generator(text, sep=1):
+    test.append(word)
+print(test)
+
+test = []
+for word in generator(text, sep=" ", option="Hello"):
+    test.append(word)
+print(test)

@@ -83,5 +83,5 @@ class Recipe:
             txt = txt + "\t" + elem + "\n"
         return txt
 
-    def __repr__(self):
-        return str(self.__dict__)
+    # def __repr__(self):
+    #     return str(self.__dict__)
