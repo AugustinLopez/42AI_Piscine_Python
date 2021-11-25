@@ -23,9 +23,13 @@ class CsvReader():
         self.skip_top = skip_top
         self.skip_bottom = skip_bottom
         self.data = []
-        self.header = []
+        self.header = None
 
     def __enter__(self):
+        if self.filename is None:
+            print("No file provided")
+            self = None
+            return self
         try:
             with open(self.filename, 'r') as fp:
                 reader = csv.reader(fp, delimiter=self.sep)
@@ -41,10 +45,9 @@ class CsvReader():
                 for i, row in enumerate(reader):
                     if (column != len(row)):
                         raise IndexError("Row {} of length {} \
-                                         VS Header of length {}"
-                                         .format(i + 2, len(row), column))
+VS Header of length {}".format(i + 2, len(row), column))
                     for val in row:
-                        if val is "" or val is None:
+                        if val == "" or val is None:
                             raise IndexError("Row {} has an empty value"
                                              .format(i + 2))
                     if skip_bottom > 0:
@@ -56,6 +59,8 @@ class CsvReader():
         except (OSError, IndexError) as e:
             print("Error: {}.".format(e))
             self = None
+        except StopIteration:
+            pass
         return self
 
     # __exit__ must have those 4 arguments in its signature even if unused
