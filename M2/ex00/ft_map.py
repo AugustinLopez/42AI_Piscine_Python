@@ -1,5 +1,6 @@
 from typing import Iterable, Callable, Optional, Any
 
+
 def ft_map(function_to_apply: Optional[Callable[[Any], Any]],
            iterable: Iterable) -> Optional[Iterable]:
     """Map the function to all elements of the iterable.
@@ -11,11 +12,13 @@ def ft_map(function_to_apply: Optional[Callable[[Any], Any]],
     None if the iterable can not be used by the function.
     """
     if not callable(function_to_apply):
-        raise TypeError("Expected callable. Got " + str(type(function_to_apply)))
+        raise TypeError("Expected callable. Got "
+                        + str(type(function_to_apply)))
     try:
         _ = iter(iterable)
     except TypeError:
-        raise TypeError("Expected iterable. Got " + str(type(iterable)))
+        raise TypeError("Expected iterable. Got "
+                        + str(type(iterable))) from None
     try:
         for elem in iterable:
             yield function_to_apply(elem)

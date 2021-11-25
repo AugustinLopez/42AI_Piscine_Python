@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+
 def what_are_the_vars(*args, **kwargs):
     """
     ...
@@ -13,9 +14,11 @@ def what_are_the_vars(*args, **kwargs):
         setattr(obj, name, value)
     return (obj)
 
+
 class ObjectC(object):
     def __init__(self):
         pass
+
 
 def doom_printer(obj):
     if obj is None:
@@ -28,6 +31,16 @@ def doom_printer(obj):
             print("{}: {}".format(attr, value))
     print("end")
 
+
+def correction_test():
+    obj = what_are_the_vars(None)
+    doom_printer(obj)
+    obj = what_are_the_vars(lambda x: x, function=what_are_the_vars)
+    doom_printer(obj)
+    obj = what_are_the_vars(3, var_0=2)
+    doom_printer(obj)
+
+
 if __name__ == "__main__":
     obj = what_are_the_vars(7)
     doom_printer(obj)
@@ -39,3 +52,4 @@ if __name__ == "__main__":
     doom_printer(obj)
     obj = what_are_the_vars(42, a=10, var_0="world")
     doom_printer(obj)
+    correction_test()

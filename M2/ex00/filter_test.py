@@ -12,7 +12,7 @@ except Exception as e:
 print(list(ft_filter(lambda x: x <= 1, [])))
 
 # list of alphabets
-alphabets = ['a', 'b', 'd', 'e', 'i', 'j', 'o', 'o']
+alphabets = ['a', 'b', 'd', 'e', 'i', 'j', 'o', 'o', 'z']
 
 # function that filters vowels
 def filterVowels(alphabet):
@@ -22,12 +22,6 @@ def filterVowels(alphabet):
     return False
 
 filteredVowels = filter(filterVowels, alphabets)
-
-print('The filtered vowels are:')
-for vowel in filteredVowels:
-    print(vowel)
-
-filteredVowels = ft_filter(filterVowels, alphabets)
 
 print('The filtered vowels are:')
 for vowel in filteredVowels:

@@ -2,6 +2,7 @@
 
 from ft_map import ft_map
 
+
 function = lambda x: x + 1
 iterable = [1, 2, 3]
 print(ft_map(function_to_apply = None, iterable = iterable))

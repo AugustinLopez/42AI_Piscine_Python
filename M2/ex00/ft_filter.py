@@ -11,14 +11,16 @@ def ft_filter(function_to_apply: Optional[Callable[[Any], bool]],
     An iterable.
     None if the iterable can not be used by the function."""
     if not callable(function_to_apply):
-        raise TypeError("Expected callable. Got " + str(type(function_to_apply)))
+        raise TypeError("Expected callable. Got "
+                        + str(type(function_to_apply)))
     try:
         _ = iter(iterable)
     except TypeError:
-        raise TypeError("Expected iterable. Got " + str(type(iterable)))
+        raise TypeError("Expected iterable. Got "
+                        + str(type(iterable))) from None
     try:
         for elem in iterable:
-             if function_to_apply(elem) is True:
-                 yield elem
+            if function_to_apply(elem) is True:
+                yield elem
     except Exception:
         return None
