@@ -20,12 +20,12 @@ def ft_reduce(function_to_apply: Optional[Callable[[Any, Any], Any]],
         raise TypeError("Expected iterable. Got "
                         + str(type(iterable))) from None
     try:
+        result = None
         for i, _ in enumerate(iterable, 0):
             if i == 0:
                 result = iterable[0]
                 continue
             result = function_to_apply(result, iterable[i])
-            # yield result
-    except Exception:
-        return None
+    except Exception as e:
+        raise AssertionError(str(e)) from None
     return result

@@ -6,7 +6,7 @@ The ft_progress function shows a basic loading bar using:
     - the yield operator
     - the time module
 """
-def progressbar(listing, sizebar=30):
+def ft_progress(listing, sizebar=30):
     elapsed_time = 0
     loopend = 0.01
     count = len(listing)

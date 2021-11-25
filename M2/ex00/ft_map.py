@@ -22,5 +22,5 @@ def ft_map(function_to_apply: Optional[Callable[[Any], Any]],
     try:
         for elem in iterable:
             yield function_to_apply(elem)
-    except Exception:
-        return None
+    except Exception as e:
+        raise AssertionError(str(e)) from None

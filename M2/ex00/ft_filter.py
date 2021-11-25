@@ -22,5 +22,5 @@ def ft_filter(function_to_apply: Optional[Callable[[Any], bool]],
         for elem in iterable:
             if function_to_apply(elem) is True:
                 yield elem
-    except Exception:
-        return None
+    except Exception as e:
+        raise AssertionError(str(e)) from None
