@@ -17,7 +17,8 @@ if __name__ == "__main__":
         tskip = int(sys.argv[3])
     if arg > 4:
         bskip = int(sys.argv[4])
-    with CsvReader(filename, header=head, skip_top=tskip, skip_bottom=bskip) as file:
+    with CsvReader(filename, header=head, skip_top=tskip,
+                   skip_bottom=bskip) as file:
         if file is None:
             print("File corrupted or missing")
         else:
