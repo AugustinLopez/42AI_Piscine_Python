@@ -56,7 +56,7 @@ VS Header of length {}".format(i + 2, len(row), column))
                         self.data.append(row)
                 if self.skip_top > 0:
                     del self.data[-self.skip_top:]
-        except (OSError, IndexError) as e:
+        except (OSError, IndexError, TypeError) as e:
             print("Error: {}.".format(e))
             self = None
         except StopIteration:
