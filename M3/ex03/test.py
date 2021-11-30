@@ -3,11 +3,15 @@
 import numpy as np
 from ColorFilter import ColorFilter
 from matplotlib import pyplot as plt
+import matplotlib
 from sys import argv
 
 if len(argv) > 2:
     if len(argv) < 2:
         exit()
+    with open('/proc/version') as fd:
+        if fd.readline().find("WSL"):
+            matplotlib.use('TKAgg')
     array = plt.imread(argv[1])
     cf = ColorFilter()
     if argv[2].find('i') != -1:
@@ -25,7 +29,13 @@ if len(argv) > 2:
     if argv[2].find('c') != -1:
         plt.imshow(cf.celluloid(array))
         plt.show()
-    exit()    
+    if argv[2].find('w') != -1:
+        plt.imshow(cf.to_grayscale(array, 'w'))
+        plt.show()
+    if argv[2].find('m') != -1:
+        plt.imshow(cf.to_grayscale(array, 'm'))
+        plt.show()
+    exit()
 
     im = np.zeros(array.shape)
     im = np.dstack(array, im)

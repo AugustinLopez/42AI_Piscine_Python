@@ -3,14 +3,14 @@
 
 from ImageProcessor import ImageProcessor
 import matplotlib
-import platform
 from sys import argv
 
 
 if len(argv) > 1:
     imgp = ImageProcessor()
-    if platform.system() == 'Windows':
-        matplotlib.use('GTK3Agg')
+    with open('/proc/version') as fd:
+        if fd.readline().find("WSL"):
+            matplotlib.use('TKAgg')
     arr = imgp.load(argv[1])
-    print(arr)
+    # print(arr)
     imgp.display(arr)
