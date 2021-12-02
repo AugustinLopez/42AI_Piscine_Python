@@ -1,5 +1,5 @@
 import numpy as np
-from typing import Optional
+from typing import Optional, List
 import copy
 
 
@@ -19,7 +19,7 @@ class ColorFilter():
         This function should not raise any Exception.
         """
         try:
-            return (1, 1, 1) - array[...,:3]
+            return (1, 1, 1) - array[..., :3]
         except Exception:
             return None
 
@@ -55,7 +55,7 @@ class ColorFilter():
         This function should not raise any Exception.
         """
         try:
-            return (0, 1, 0) * copy.deepcopy(array[...,:3])
+            return (0, 1, 0) * copy.deepcopy(array[..., :3])
         except Exception:
             return None
 
@@ -72,7 +72,7 @@ class ColorFilter():
         This function should not raise any Exception.
         """
         try:
-            return array[...,:3] - self.to_green(array) - self.to_blue(array)
+            return array[..., :3] - self.to_green(array) - self.to_blue(array)
         except Exception:
             return None
 
@@ -93,17 +93,49 @@ class ColorFilter():
         Raises:
         This function should not raise any Exception
         """
-        tmp = array[..., :3].copy()
-        for i in range(3):
-            x = tmp[..., i]
-            rounding = np.linspace(x.min(), x.max(), endpoint=True, num=4)
-            treshold = np.linspace(x.min(), x.max(), endpoint=True, num=5)
-            for r, t1, t2 in zip(rounding, treshold[:-1], treshold[1:]):
-                x[(x > t1) & (x <= t2)] = r
-        return tmp
+        try:
+            tmp = array[..., :3].copy()
+            for i in range(3):
+                x = tmp[..., i]
+                rounding = np.linspace(x.min(), x.max(), endpoint=True, num=4)
+                treshold = np.linspace(x.min(), x.max(), endpoint=True, num=5)
+                for r, t1, t2 in zip(rounding, treshold[:-1], treshold[1:]):
+                    x[(x > t1) & (x <= t2)] = r
+            return tmp
+        except Exception:
+            return None
 
-    def to_grayscale(self, array, filter = "m", weights = [.299, .587, .114]) \
-            -> Optional[np.ndarray]: # need kwargs instead of weights
+    def __weighter(self, **kwargs) -> List[float]:
+        """
+        check kwargs argument for weighted grayscale
+        args:
+        weights: [kwargs] list of 3 float where the sum equals to 1,
+        return:
+        weights if the argument respect the previous properties
+        None: otherwise
+        """
+        if len(kwargs) == 1:
+            try:
+                weight = list(kwargs.values())[0]
+                if not isinstance(weight, list):
+                    raise TypeError
+                if len(weight) != 3:
+                    raise ValueError
+                x = 0
+                for elem in weight:
+                    if not isinstance(elem, float):
+                        raise TypeError
+                    x += elem
+                if x != 1.0:
+                    raise ValueError
+            except Exception:
+                return None
+        else:
+            return None
+        return weight
+
+    def to_grayscale(self, array, filter="m", **kwargs) \
+            -> Optional[np.ndarray]:
         """
         Applies a grayscale filter to the image received as a numpy array.
         For filter = ’mean’/’m’: performs the mean of RBG channels.
@@ -119,11 +151,16 @@ class ColorFilter():
         Raises:
         This function should not raise any Exception.
         """
-        if filter == "weight" or filter == "w":
-            x = np.tile(array[..., :3], 1) * weights
-            x = np.sum(x, axis=2)
-            return np.dstack((x,x,x))
-        elif filter == "mean" or filter == "m":
-            x = np.sum(array[..., :3], axis=2) / 3
-            return np.dstack((x,x,x))
-        return array
+        try:
+            if filter == "weight" or filter == "w":
+                weight = self.__weighter(**kwargs)
+                if weight is None:
+                    return None
+                x = np.sum(array[..., :3] * weight, axis=2)
+            elif filter == "mean" or filter == "m":
+                x = np.sum(array[..., :3], axis=2) / 3
+            else:
+                return array
+            return np.dstack((x, x, x))
+        except Exception:
+            return None
