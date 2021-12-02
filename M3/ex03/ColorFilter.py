@@ -36,7 +36,6 @@ class ColorFilter():
         This function should not raise any Exception.
         """
         try:
-            # Use Ellipsis to skip dimension 0 and 1: [R, G, B].
             return np.dstack((np.zeros(np.shape(array[..., 2])),
                               np.zeros(np.shape(array[..., 2])),
                               array[..., 2]))
