@@ -9,10 +9,17 @@ from sys import argv
 if len(argv) > 2:
     if len(argv) < 2:
         exit()
-    with open('/proc/version') as fd:
-        if fd.readline().find("WSL"):
-            matplotlib.use('TKAgg')
+    try:
+        with open('/proc/version') as fd:
+            if fd.readline().find("WSL"):
+                matplotlib.use('TKAgg')
+    except Exception:
+        pass
     array = plt.imread(argv[1])
+    if np.shape(array)[2] == 4:
+        print("RGBA")
+    else:
+        print("RGB")
     cf = ColorFilter()
     if argv[2].find('i') != -1:
         plt.imshow(cf.invert(array))
@@ -29,32 +36,23 @@ if len(argv) > 2:
     if argv[2].find('c') != -1:
         plt.imshow(cf.celluloid(array))
         plt.show()
-    if argv[2].find('w') != -1:
-        plt.imshow(cf.to_grayscale(array, 'w'))
-        plt.show()
-    if argv[2].find('m') != -1:
+    if argv[2].find('G') != -1:
         plt.imshow(cf.to_grayscale(array, 'm'))
         plt.show()
-    exit()
-
-    im = np.zeros(array.shape)
-    im = np.dstack(array, im)
-    plt.imshow(im)
-    plt.show()
-    exit()
-    cf = ColorFilter()
-    for f in [cf.to_red, cf.to_green, cf.to_blue, cf.invert, cf.celluloid]:
-        array = plt.imread(argv[1])
-        plt.imshow(f(array))
+        plt.imshow(cf.to_grayscale(array, 'w', weights=[1.0, 0.0, 0.0]))
         plt.show()
-
-    array = plt.imread(argv[1])
-    im = cf.to_grayscale(array, "m")
-    plt.imshow(im)
+        plt.imshow(cf.to_grayscale(array, 'w', weights=[0.0, 1.0, 0.0]))
+        plt.show()
+        plt.imshow(cf.to_grayscale(array, 'w', weights=[0.0, 0.0, 1.0]))
+        plt.show()
+        plt.imshow(cf.to_grayscale(cf.to_green(array), 'w',
+                                   weights=[1.0, 0.0, 0.0]))
+        plt.show()
+        plt.imshow(cf.to_grayscale(cf.to_green(array), 'weight',
+                                   weights=[0.0, 1.0, 0.0]))
+        plt.show()
+        plt.imshow(cf.to_grayscale(cf.celluloid(cf.invert(array)), 'm'))
+        plt.show()
+    plt.imshow(array)
     plt.show()
-
-    array = plt.imread(argv[1])
-    im = cf.to_grayscale(array, "w", weights = [0.2126, 0.7152, 0.0722])
-    plt.imshow(im)
-    plt.show()
-
+    exit()
