@@ -5,7 +5,7 @@ import numpy as np
 
 head, *body = [x.rstrip() for x in open(argv[1])]
 announce = map(int, head.split(','))
-players = np.reshape(np.loadtxt(body, int),(-1,5,5))
+players = np.reshape(np.loadtxt(body, int), (-1,5,5))
 a = -1
 b = -1
 for n in announce:
