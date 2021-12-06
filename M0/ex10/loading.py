@@ -25,12 +25,3 @@ def ft_progress(listing, sizebar=30):
         yield item
         loopend = time() - loopstart
         elapsed_time = elapsed_time + loopend
-
-
-listy = range(3333)
-ret = 0
-for elem in ft_progress(listy):
-    ret += elem
-    sleep(0.001)
-print()
-print(ret)

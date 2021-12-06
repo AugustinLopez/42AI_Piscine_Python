@@ -1,6 +1,5 @@
 import string
-from sys import argv, stderr
-
+from sys import argv
 
 def text_analyzer(*arg):
     """The `text_analyzer(string)` function counts the number of:
@@ -42,3 +41,11 @@ If more than 2 arguments are provided, the program print an error."""
     print("-", lo, "lower letter(s)")
     print("-", p, "punctuation mark(s)")
     print("-", s, "space(s)")
+
+if __name__ == "__main__":
+    if len(argv) > 2:
+        print("ERROR")
+    elif len(argv) == 0:
+        text_analyzer()
+    else:
+        text_analyzer(argv[1])
