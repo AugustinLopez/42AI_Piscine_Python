@@ -9,12 +9,12 @@ p2 = []
 for x in open(argv[1]):
     opening = []
     for c in list(x.rstrip()):
-        if c in "[({<":
+        if c in d.values:
             opening.append(c)
         elif opening.pop() != d[c]:
             p1 += r[c]
             break
-    else:
+    else: # when break is not called
         tmp = 0
         for c in opening[::-1]:
             tmp = tmp * 5 + r[c]
