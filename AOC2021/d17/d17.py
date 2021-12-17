@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+#https://www.reddit.com/r/adventofcode/comments/rily4v/2021_day_17_part_2_never_brute_force_when_you_can/
 
 from sys import argv
 
